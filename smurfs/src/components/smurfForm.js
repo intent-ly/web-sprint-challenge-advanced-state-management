@@ -1,30 +1,34 @@
 import React, { useState } from 'react';
 import axios from "axios";
 
-export const smurfForm = props => {
+export const SmurfForm = props => {
     const defaultState = {
         name: '',
         age: '',
         height: '',
-        id: new Date()
     };
+
     const [formState, setFormState] = useState(defaultState);
 
-    const formSubmit = e => {
+    const formSubmit = (e) => {
         e.preventDefault();
-        console.log('form submitted!');
+
         axios.post('http://localhost:3333/smurfs', formState)
-            .then(() => {props.setUsers([...props.users, {formState}]);
-                         console.log(formState);})
-            .catch(err => console.log(err));
+            .then( res =>{
+                dispatchEvent({
+                    payload: formState,
+                })
+            })
+            .catch(err => console.log(err))
     };
 
     const inputChange = e => {
         console.log(e.target.type);
-        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+        const value = e.target.name ? e.target.text: e.target.value;
         setFormState({
             ...formState,
-            [e.target.name]: value
+            [e.target.name]: value,
+
         });
     };
 
@@ -32,7 +36,7 @@ export const smurfForm = props => {
         <div className='container'>
             <form className='card' onSubmit={formSubmit}>
                 <h1>Create a Smurf</h1>
-                <div className='txtb'>
+                <div>
                     Name:
                     <input 
                         type='text'
@@ -41,7 +45,7 @@ export const smurfForm = props => {
                         value={formState.name}
                         onChange={inputChange}/>                    
                 </div>
-                <div className='txtb'>
+                <div>
                     Age:
                     <input
                         type='text'
@@ -49,7 +53,7 @@ export const smurfForm = props => {
                         value={formState.age}
                         onChange={inputChange}/>
                 </div>
-                <div className='txtb'>
+                <div>
                     Height:
                     <input
                         type='text'

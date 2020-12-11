@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import "./App.css";
-import smurfList from './smurf'
-import {smurfForm} from './smurfForm'
+import SmurfList from './Smurf'
+import {SmurfForm} from './SmurfForm'
 
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-       <smurfForm />
-       <smurfList/>
+       <SmurfForm />
+       <SmurfList/>
       </div>
     );
   }
